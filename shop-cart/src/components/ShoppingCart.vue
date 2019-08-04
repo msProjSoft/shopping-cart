@@ -2,25 +2,36 @@
     <div>
         <h1>Shopping Cart</h1>
         <ul>
-            <li v-for="product in products" :key="product.index">
-                {{product.title}} - {{product.price}} - {{product.quantity}}
+            <li v-for="item in cartProducts" :key="item.index">
+                {{item.title}} - {{item.price}} - {{item.quantity}}
 
             </li>
         </ul>
         <p>Total: {{total}}</p>
+        <button :disabled="!cartProducts.length >0"
+                @click="checkout">Checkout</button>
+        <p>{{checkoutStatuts}}</p>
     </div>
 </template>
 
 <script>
-export default {
+import {mapState, mapGetters, mapActions} from 'vuex'
+export default { 
     computed: {
-        products() {
-            return this.$store.getters.cartProducts
-        }
+        ...mapGetters({
+            cartProducts: 'cartProducts',
+            total: 'cartTotal'
+        }),
+
+        ...mapState({
+            checkoutStatuts:state => state.cart.checkoutStatuts
+        })
     },
-    total() {
-        return this.$store.getters.cartTotal
-    }
+
+    methods: {
+        ...mapActions(['checkout'])
+        //OU ...mapActions({checkout: 'checkout'})
+    },
 }
 </script>
 

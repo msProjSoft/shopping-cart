@@ -9,7 +9,7 @@ const _products = [
   
   export default {
     getProducts (cb) {
-      setTimeout(() => cb(_products), 1000)
+      setTimeout(() => cb(_products), 500)
     },
   
     buyProducts (products, cb, errorCb) {
@@ -19,5 +19,11 @@ const _products = [
           ? cb()
           : errorCb()
       }, 100)
+    },
+
+    checkoutProducts() {
+      var sec = new Date().getTime()
+      if(sec % 2 === 0) return 1
+      return 0
     }
   }
