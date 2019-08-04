@@ -1,10 +1,15 @@
 import shop from '../../api/shop.js'
+
 export default {
     namespaced: true,
+
+     //=================== STATE ==========================
     state: {
         itemsCart: [],   // {id, quantity}
         checkoutStatuts: null,
     },
+
+     //=================== GETTERS ==========================
     getters: {
         //Quanto designamos o namespaced=true...
         //Getters aceder ao Getters neste modulo
@@ -34,6 +39,8 @@ export default {
         },
 
     },
+
+    //=================== MUTATIONS ==========================
     mutations: {
                 
         //const cartItem = {id: 123, quantity:2}
@@ -55,6 +62,8 @@ export default {
             state.itemsCart = []
         },
     },
+
+     //=================== ACTIONS ==========================
     actions: {
         addProductToCart({state, getters, commit, rootState, rootGetters}, product) {
             if(rootGetters['products/productIsInStock'](product)) {

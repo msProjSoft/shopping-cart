@@ -15,12 +15,15 @@
 <script>
 import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
+
+    //=================== DATA ==========================
     data() {
         return {
             loading: false,
         }
     },
 
+   //=================== COPMPUTED ==========================
     computed: {
         ...mapState({
             products:state => state.products.items
@@ -31,6 +34,7 @@ export default {
         }),
     },
 
+   //=================== METHODS ==========================
     methods: {
         ...mapActions({
             fetchProducts: 'products/fetchProducts',
@@ -38,6 +42,8 @@ export default {
         }),
    
     },
+
+     //=================== CREATED ==========================
     created() {
         this.loading = true
         this.fetchProducts()
