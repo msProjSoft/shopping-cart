@@ -1,5 +1,6 @@
 import shop from '../../api/shop.js'
 export default {
+    namespaced: true,
     state: {
         items: [],
     },

@@ -1,11 +1,15 @@
 import shop from '../../api/shop.js'
 export default {
+    namespaced: true,
     state: {
         itemsCart: [],   // {id, quantity}
         checkoutStatuts: null,
     },
     getters: {
-        cartProducts(state, getters, rootState) {
+        //Quanto designamos o namespaced=true...
+        //Getters aceder ao Getters neste modulo
+        //rootGetters p/ aceder ao Getters de outro modulo
+        cartProducts(state, getters, rootState, rootGetters) { 
             return state.itemsCart.map(cartItem => {
                 const product = rootState.products.items.find(item => 
                     item.id === cartItem.id)
@@ -52,13 +56,13 @@ export default {
         },
     },
     actions: {
-        addProductToCart({state, getters, commit, rootState}, product) {
-            if(getters.productIsInStock(product)) {
+        addProductToCart({state, getters, commit, rootState, rootGetters}, product) {
+            if(rootGetters['products/productIsInStock'](product)) {
                 //find cartItem
                 const cartItem = state.itemsCart.find(item => 
                     item.id === product.id)
 
-                if(!cartItem) {
+                if(!cartItem) { //Caso o produto ainda não exista no carrito
                     // pushProductToCart
                     commit('pushProductToCart', product.id)
                 }else {
@@ -66,7 +70,7 @@ export default {
                     commit('incrementItemQuantity', cartItem)
                 }
 
-                commit('decrementProductInventory', product)
+                commit('products/decrementProductInventory', product, {root: true})
             }
         },
 
